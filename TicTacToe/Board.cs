@@ -7,15 +7,25 @@ namespace TicTacToe
     class Board
     {
         public char[][] boardSpaces;
+        public bool isPlayerOne = true;
 
         public Board()
         {
             boardSpaces = new char[][] { new char[] { '.', '.', '.' }, new char[] { '.', '.', '.' }, new char[] { '.', '.', '.' } };
         }
 
-        public void PlaceAPiece(char piece, int x, int y)
+        public void PlaceAPiece(int x, int y)
         {
-            throw NotImplementedException;
+            if (isPlayerOne)
+            {
+                boardSpaces[x][y] = 'X';
+                isPlayerOne = !isPlayerOne;
+            } 
+            else
+            {
+                boardSpaces[x][y] = 'O';
+                isPlayerOne = !isPlayerOne;
+            }
         }
 
         public void PrintBoard()
@@ -32,12 +42,12 @@ namespace TicTacToe
 
         public bool CheckSpaceEmpty(int x, int y)
         {
-            throw NotImplementedException;
+            throw new NotImplementedException();
         }
 
         public int CheckStatus()
         {
-            throw NotImplementedException;
+            throw new NotImplementedException();
         }
     }
 }
