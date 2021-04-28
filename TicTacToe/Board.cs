@@ -16,15 +16,18 @@ namespace TicTacToe
 
         public void PlaceAPiece(int x, int y)
         {
-            if (isPlayerOne)
+            if (CheckSpaceEmpty(x, y))
             {
-                boardSpaces[x][y] = 'X';
-                isPlayerOne = !isPlayerOne;
-            } 
-            else
-            {
-                boardSpaces[x][y] = 'O';
-                isPlayerOne = !isPlayerOne;
+                if (isPlayerOne)
+                {
+                    boardSpaces[x][y] = 'X';
+                    isPlayerOne = !isPlayerOne;
+                }
+                else
+                {
+                    boardSpaces[x][y] = 'O';
+                    isPlayerOne = !isPlayerOne;
+                }
             }
         }
 
@@ -42,7 +45,11 @@ namespace TicTacToe
 
         public bool CheckSpaceEmpty(int x, int y)
         {
-            throw new NotImplementedException();
+            if (boardSpaces[x][y] != '.')
+            {
+                return false;
+            }
+            return true;
         }
 
         public int CheckStatus()
