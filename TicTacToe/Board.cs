@@ -8,6 +8,8 @@ namespace TicTacToe
     {
         public char[][] boardSpaces;
         public bool isPlayerOne = true;
+        public bool isGameEnded = false;
+        public int counter = 0;
 
         public Board()
         {
@@ -18,6 +20,7 @@ namespace TicTacToe
         {
             if (CheckSpaceEmpty(x, y))
             {
+                Console.WriteLine("Move accepted, here's the current board: \n");
                 if (isPlayerOne)
                 {
                     boardSpaces[x][y] = 'X';
@@ -28,6 +31,11 @@ namespace TicTacToe
                     boardSpaces[x][y] = 'O';
                     isPlayerOne = !isPlayerOne;
                 }
+                counter++;
+            } 
+            else
+            {
+                Console.WriteLine("Oh no, a piece is already at this place! Try again...");
             }
         }
 
@@ -41,6 +49,7 @@ namespace TicTacToe
                 }
                 Console.WriteLine();
             }
+            Console.WriteLine();
         }
 
         public bool CheckSpaceEmpty(int x, int y)
@@ -52,16 +61,15 @@ namespace TicTacToe
             return true;
         }
 
-        public int CheckStatus()
+        public void CheckBoardStatus()
         {
-            throw new NotImplementedException();
+            if (counter == 9)
+            {
+                Console.WriteLine("The game is a draw.");
+                isGameEnded = true;
+            }
+
+
         }
     }
 }
-
-
-// PlaceAPiece
-// PrintBoard
-// CheckStatus
-// CheckSpaceEmpty
-// 
