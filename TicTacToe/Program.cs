@@ -13,6 +13,8 @@ namespace TicTacToe
             Console.WriteLine("Here's the current board: \n");
             _board.PrintBoard();
 
+            int x, y;
+
             do
             {
                 if (_board.isPlayerOne)
@@ -39,16 +41,23 @@ namespace TicTacToe
                     break;
                 }
 
-                string[] coordinates = UserInput.Split(',');
-                int x = Int32.Parse(coordinates[0]) - 1;
-                int y = Int32.Parse(coordinates[1]) - 1;
-
-                _board.PlaceAPiece(x, y);
-                _board.PrintBoard();
-                _board.CheckBoardStatus();
+                try
+                {
+                    string[] coordinates = UserInput.Split(',');
+                    x = Int32.Parse(coordinates[0]) - 1;
+                    y = Int32.Parse(coordinates[1]) - 1;
+                    _board.PlaceAPiece(x, y);
+                    _board.CheckBoardStatus();
+                    Console.WriteLine(_board.result);
+                    _board.PrintBoard();
+                }
+                catch
+                {
+                    Console.WriteLine("Input error, please write in the following format: x,y or 'q'  \n");
+                    _board.PrintBoard();
+                }
 
             } while (!_board.isGameEnded);
-
         }
     }
 }

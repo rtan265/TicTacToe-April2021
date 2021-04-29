@@ -10,6 +10,7 @@ namespace TicTacToe
         public bool isPlayerOne = true;
         public bool isGameEnded = false;
         public int counter = 0;
+        public string result = "";
 
         public Board()
         {
@@ -19,8 +20,7 @@ namespace TicTacToe
         public void PlaceAPiece(int x, int y)
         {
             if (CheckSpaceEmpty(x, y))
-            {
-                Console.WriteLine("Move accepted, here's the current board: \n");
+            { 
                 if (isPlayerOne)
                 {
                     boardSpaces[x][y] = 'X';
@@ -65,11 +65,60 @@ namespace TicTacToe
         {
             if (counter == 9)
             {
-                Console.WriteLine("The game is a draw.");
+                result = "The game is a draw. \n";
                 isGameEnded = true;
+                return;
             }
 
+            if (counter > 4)
+            {
+                if (CheckRow() || CheckColumn() || CheckDiagonal())
+                {
+                    return;
+                }
+            }
 
+            result = "Move accepted, here's the current board: \n";
+        }
+
+        public bool CheckRow()
+        {
+            for (int i = 0; i < boardSpaces.Length; i++)
+            {
+                if (boardSpaces[i][0] == boardSpaces[i][1] && boardSpaces[i][1] == boardSpaces[i][2] && boardSpaces[i][0] == boardSpaces[i][2])
+                { 
+                    isGameEnded = true;
+                    result = "Move accepted, well done you've won the game! \n";
+                    return true;
+                }
+            }
+            return false;
+        }
+
+        public bool CheckColumn()
+        {
+            for (int i = 0; i < boardSpaces.Length; i++)
+            {                             
+                if (boardSpaces[0][i] == boardSpaces[1][i] && boardSpaces[1][i] == boardSpaces[2][i] && boardSpaces[0][i] == boardSpaces[2][i])
+                {
+                    isGameEnded = true;
+                    result = "Move accepted, well done you've won the game! \n";
+                    return true;
+                }
+            }
+            return false;
+        }
+
+        public bool CheckDiagonal()
+        {
+            if ((boardSpaces[0][0] == boardSpaces[1][1] && boardSpaces[1][1] == boardSpaces[2][2] && boardSpaces[0][0] == boardSpaces[2][2]) || (boardSpaces[0][2] == boardSpaces[1][1] && boardSpaces[1][1] == boardSpaces[2][0] && boardSpaces[0][2] == boardSpaces[2][0]))
+            {
+                isGameEnded = true;
+                result = "Move accepted, well done you've won the game! \n";
+                return true;
+            }
+
+            return false;
         }
     }
 }
