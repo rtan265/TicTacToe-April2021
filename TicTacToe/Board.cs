@@ -24,19 +24,22 @@ namespace TicTacToe
                 if (isPlayerOne)
                 {
                     boardSpaces[x][y] = 'X';
+                    CheckBoardStatus(isPlayerOne ? 'X' : 'O');
                     isPlayerOne = !isPlayerOne;
                 }
                 else
                 {
                     boardSpaces[x][y] = 'O';
+                    CheckBoardStatus(isPlayerOne ? 'X' : 'O');
                     isPlayerOne = !isPlayerOne;
                 }
                 counter++;
             } 
             else
             {
-                Console.WriteLine("Oh no, a piece is already at this place! Try again...");
+                result = "Oh no, a piece is already at this place! Try again... \n";
             }
+            PrintBoard();
         }
 
         public void PrintBoard()
@@ -61,7 +64,7 @@ namespace TicTacToe
             return true;
         }
 
-        public void CheckBoardStatus()
+        public void CheckBoardStatus(char piece)
         {
             if (counter == 9)
             {
@@ -70,22 +73,19 @@ namespace TicTacToe
                 return;
             }
 
-            if (counter > 4)
+            if (CheckRow(piece) || CheckColumn(piece) || CheckDiagonal(piece))
             {
-                if (CheckRow() || CheckColumn() || CheckDiagonal())
-                {
-                    return;
-                }
+                return;
             }
 
             result = "Move accepted, here's the current board: \n";
         }
 
-        public bool CheckRow()
+        public bool CheckRow(char piece)
         {
             for (int i = 0; i < boardSpaces.Length; i++)
             {
-                if (boardSpaces[i][0] == boardSpaces[i][1] && boardSpaces[i][1] == boardSpaces[i][2] && boardSpaces[i][0] == boardSpaces[i][2])
+                if (boardSpaces[i][0] == piece && boardSpaces[i][1] == piece && boardSpaces[i][2] == piece)
                 { 
                     isGameEnded = true;
                     result = "Move accepted, well done you've won the game! \n";
@@ -95,12 +95,12 @@ namespace TicTacToe
             return false;
         }
 
-        public bool CheckColumn()
+        public bool CheckColumn(char piece)
         {
             for (int i = 0; i < boardSpaces.Length; i++)
-            {                             
-                if (boardSpaces[0][i] == boardSpaces[1][i] && boardSpaces[1][i] == boardSpaces[2][i] && boardSpaces[0][i] == boardSpaces[2][i])
-                {
+            {
+                if (boardSpaces[0][i] == piece && boardSpaces[1][i] == piece && boardSpaces[2][i] == piece)
+                { 
                     isGameEnded = true;
                     result = "Move accepted, well done you've won the game! \n";
                     return true;
@@ -109,9 +109,9 @@ namespace TicTacToe
             return false;
         }
 
-        public bool CheckDiagonal()
+        public bool CheckDiagonal(char piece)
         {
-            if ((boardSpaces[0][0] == boardSpaces[1][1] && boardSpaces[1][1] == boardSpaces[2][2] && boardSpaces[0][0] == boardSpaces[2][2]) || (boardSpaces[0][2] == boardSpaces[1][1] && boardSpaces[1][1] == boardSpaces[2][0] && boardSpaces[0][2] == boardSpaces[2][0]))
+            if ((boardSpaces[0][0] == piece && boardSpaces[1][1] == piece && boardSpaces[2][2] == piece) || (boardSpaces[0][2] == piece && boardSpaces[1][1] == piece && boardSpaces[2][0] == piece && boardSpaces[1][1] == piece))
             {
                 isGameEnded = true;
                 result = "Move accepted, well done you've won the game! \n";

@@ -47,16 +47,13 @@ namespace TicTacToe
                     x = Int32.Parse(coordinates[0]) - 1;
                     y = Int32.Parse(coordinates[1]) - 1;
                     _board.PlaceAPiece(x, y);
-                    _board.CheckBoardStatus();
                     Console.WriteLine(_board.result);
-                    _board.PrintBoard();
                 }
                 catch
                 {
                     Console.WriteLine("Input error, please write in the following format: x,y or 'q'  \n");
                     _board.PrintBoard();
                 }
-
             } while (!_board.isGameEnded);
         }
     }
