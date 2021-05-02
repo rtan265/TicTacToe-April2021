@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace TicTacToe
 {
@@ -24,15 +22,13 @@ namespace TicTacToe
                 if (isPlayerOne)
                 {
                     boardSpaces[x][y] = 'X';
-                    CheckBoardStatus(isPlayerOne ? 'X' : 'O');
-                    isPlayerOne = !isPlayerOne;
                 }
                 else
                 {
                     boardSpaces[x][y] = 'O';
-                    CheckBoardStatus(isPlayerOne ? 'X' : 'O');
-                    isPlayerOne = !isPlayerOne;
                 }
+                CheckBoardStatus(isPlayerOne ? 'X' : 'O');
+                isPlayerOne = !isPlayerOne;
                 counter++;
             } 
             else
