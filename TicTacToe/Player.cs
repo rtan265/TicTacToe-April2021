@@ -6,8 +6,20 @@ namespace TicTacToe
 {
     class Player
     {
-        public bool isTurn { get; set; }
         public char Piece { get; set; }
+        public bool isTurn { get; set; }
 
+        public Player(char piece)
+        {
+            Piece = piece;
+            if (piece == 'X')
+            {
+                isTurn = true;
+            } 
+            else
+            {
+                isTurn = false;
+            }
+        }
     }
 }
