@@ -38,7 +38,7 @@ namespace TicTacToe
             PrintBoard();
         }
 
-        private void PrintBoard()
+        public void PrintBoard()
         {
             for (int i = 0; i < dimensions.Length; i++)
             {
