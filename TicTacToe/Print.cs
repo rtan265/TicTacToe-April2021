@@ -85,6 +85,32 @@ namespace TicTacToe
             PrintResult();
         }
 
+        public void PrintBoard(char[][] dimensions)
+        {
+            for (int i = 0; i < dimensions.Length; i++)
+            {
+                for (int j = 0; j < dimensions[i].Length; j++)
+                {
+                    Console.Write(dimensions[i][j] + " ");
+                }
+                Console.WriteLine();
+            }
+            Console.WriteLine();
+        }
+
+        public void PrintBoard(Board board)
+        {
+            for (int i = 0; i < board.dimensions.Length; i++)
+            {
+                for (int j = 0; j < board.dimensions[i].Length; j++)
+                {
+                    Console.Write(board.dimensions[i][j] + " ");
+                }
+                Console.WriteLine();
+            }
+            Console.WriteLine();
+        }
+
         private void PrintResult()
         {
             Console.WriteLine(toBePrinted);
