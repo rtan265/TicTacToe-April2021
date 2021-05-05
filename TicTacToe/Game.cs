@@ -11,7 +11,6 @@ namespace TicTacToe
         public Player playerTwo { get; set; }
         public bool isGameEnded { get; set; }
         public Print print { get; set; }
-        public Input input { get; set; }
 
         public Game()
         {
@@ -19,7 +18,6 @@ namespace TicTacToe
             playerTwo = new Player('O');
             board = new Board();
             print = new Print();
-            input = new Input();
 
             isGameEnded = false;
         }
@@ -28,7 +26,7 @@ namespace TicTacToe
         {
             int x, y;
             print.WelcomeToTicTacToe();
-            board.PrintBoard();
+            print.PrintBoard(board);
 
             do
             {
@@ -60,23 +58,27 @@ namespace TicTacToe
                     string[] coordinates = UserInput.Split(',');
                     x = Int32.Parse(coordinates[0]) - 1;
                     y = Int32.Parse(coordinates[1]) - 1;
+                    
                     Console.WriteLine();
-                    board.PlaceAPiece(x, y, playerOne, playerTwo);
-                    isGameEnded = board.CheckBoardStatus(playerOne.isTurn ? 'X' : 'O');
-                    FlipPlayerTurn(playerOne, playerTwo);
+                    if (board.PlaceAPiece(x, y, playerOne))
+                    {
+
+                        isGameEnded = board.CheckBoardStatus(playerOne.isTurn ? 'X' : 'O');
+                        FlipPlayerTurn(playerOne);
+
+                    }
                 }
                 catch
                 {
                     print.InputError();
-                    board.PrintBoard();
+                    print.PrintBoard(board);
                 }
             } while (!isGameEnded);
         }
 
-        private void FlipPlayerTurn(Player playerOne, Player playerTwo)
+        private void FlipPlayerTurn(Player playerOne)
         {
             playerOne.isTurn = !playerOne.isTurn;
-            playerTwo.isTurn = !playerTwo.isTurn;
         }
     }
 }
