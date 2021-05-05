@@ -12,10 +12,11 @@ namespace TicTacToe
         public Player(char piece)
         {
             Piece = piece;
+
             if (piece == 'X')
             {
                 isTurn = true;
-            } 
+            }
             else
             {
                 isTurn = false;
