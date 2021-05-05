@@ -8,18 +8,20 @@ namespace TicTacToe
     {
         public char[][] dimensions { get; set; }
         private int counter { get; set; }
+        private Print print { get; set; }
 
         public Board()
         { 
             dimensions = new char[][] { new char[] { '.', '.', '.'}, new char[] { '.', '.', '.'}, new char[] { '.', '.', '.'} };
             counter = 0;
+            print = new Print();
         }
 
-        public void PlaceAPiece(int x, int y, bool isPlayerOne)
+        public void PlaceAPiece(int x, int y, Player playerOne, Player playerTwo)
         {
             if (CheckSpaceEmpty(x, y))
             {
-                if (isPlayerOne)
+                if (playerOne.isTurn)
                 {
                     dimensions[x][y] = 'X';
                 }
@@ -27,15 +29,13 @@ namespace TicTacToe
                 {
                     dimensions[x][y] = 'O';
                 }
-                CheckBoardStatus(isPlayerOne ? 'X' : 'O');
-                isPlayerOne = !isPlayerOne;
+                print.MoveAccepted();
                 counter++;
             }
             else
             {
-                Console.WriteLine("Oh no, a piece is already at this place! Try again... \n");
+                print.PieceIsBlocked();
             }
-            PrintBoard();
         }
 
         public void PrintBoard()
@@ -51,17 +51,20 @@ namespace TicTacToe
             Console.WriteLine();
         }
 
-        private void CheckBoardStatus(char piece)
+        public bool CheckBoardStatus(char piece)
         {
+            PrintBoard();
             if (counter == 9)
-            { 
-                return;
+            {
+                print.GameIsDrawn();
+                return true;
             }
 
             if (CheckRow(piece) || CheckColumn(piece) || CheckDiagonal(piece))
             {
-                return;
+                return true;
             }
+            return false;
         }
 
         private bool CheckSpaceEmpty(int x, int y)
@@ -79,28 +82,31 @@ namespace TicTacToe
             {
                 if (dimensions[i][0] == piece && dimensions[i][1] == piece && dimensions[i][2] == piece)
                 {
+                    print.GetWinner(piece);
                     return true;
                 }
             }
             return false;
         }
 
-        public bool CheckColumn(char piece)
+        private bool CheckColumn(char piece)
         {
             for (int i = 0; i < dimensions.Length; i++)
             {
                 if (dimensions[0][i] == piece && dimensions[1][i] == piece && dimensions[2][i] == piece)
-                {   
+                {
+                    print.GetWinner(piece);
                     return true;
                 }
             }
             return false;
         }
 
-        public bool CheckDiagonal(char piece)
+        private bool CheckDiagonal(char piece)
         {
             if ((dimensions[0][0] == piece && dimensions[1][1] == piece && dimensions[2][2] == piece) || (dimensions[0][2] == piece && dimensions[1][1] == piece && dimensions[2][0] == piece))
             {
+                print.GetWinner(piece);
                 return true;
             }
 
