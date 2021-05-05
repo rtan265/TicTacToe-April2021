@@ -1,120 +1,117 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Text;
 
 namespace TicTacToe
 {
     class Board
     {
-        public char[][] boardSpaces;
-        public bool isPlayerOne = true;
-        public bool isGameEnded = false;
-        public int counter = 0;
-        public string result = "";
+        public char[][] dimensions { get; set; }
+        private int counter { get; set; }
+        private Print print { get; set; }
 
         public Board()
-        {
-            boardSpaces = new char[][] { new char[] { '.', '.', '.' }, new char[] { '.', '.', '.' }, new char[] { '.', '.', '.' } };
+        { 
+            dimensions = new char[][] { new char[] { '.', '.', '.'}, new char[] { '.', '.', '.'}, new char[] { '.', '.', '.'} };
+            counter = 0;
+            print = new Print();
         }
 
-        public void PlaceAPiece(int x, int y)
+        public void PlaceAPiece(int x, int y, Player playerOne, Player playerTwo)
         {
             if (CheckSpaceEmpty(x, y))
-            { 
-                if (isPlayerOne)
+            {
+                if (playerOne.isTurn)
                 {
-                    boardSpaces[x][y] = 'X';
+                    dimensions[x][y] = 'X';
                 }
                 else
                 {
-                    boardSpaces[x][y] = 'O';
+                    dimensions[x][y] = 'O';
                 }
-                CheckBoardStatus(isPlayerOne ? 'X' : 'O');
-                isPlayerOne = !isPlayerOne;
+                print.MoveAccepted();
                 counter++;
-            } 
+            }
             else
             {
-                result = "Oh no, a piece is already at this place! Try again... \n";
+                print.PieceIsBlocked();
             }
-            PrintBoard();
         }
 
         public void PrintBoard()
         {
-            for (int i = 0; i < boardSpaces.Length; i++)
+            for (int i = 0; i < dimensions.Length; i++)
             {
-                for (int j = 0; j < boardSpaces[i].Length; j++)
+                for (int j = 0; j < dimensions[i].Length; j++)
                 {
-                    Console.Write(boardSpaces[i][j] + " ");
+                    Console.Write(dimensions[i][j] + " ");
                 }
                 Console.WriteLine();
             }
             Console.WriteLine();
         }
 
-        public bool CheckSpaceEmpty(int x, int y)
+        public bool CheckBoardStatus(char piece)
         {
-            if (boardSpaces[x][y] != '.')
+            PrintBoard();
+            if (counter == 9)
+            {
+                print.GameIsDrawn();
+                return true;
+            }
+
+            if (CheckRow(piece) || CheckColumn(piece) || CheckDiagonal(piece))
+            {
+                return true;
+            }
+            return false;
+        }
+
+        private bool CheckSpaceEmpty(int x, int y)
+        {
+            if (dimensions[x][y] != '.')
             {
                 return false;
             }
             return true;
         }
 
-        public void CheckBoardStatus(char piece)
+        private bool CheckRow(char piece)
         {
-            if (counter == 9)
+            for (int i = 0; i < dimensions.Length; i++)
             {
-                result = "The game is a draw. \n";
-                isGameEnded = true;
-                return;
-            }
-
-            if (CheckRow(piece) || CheckColumn(piece) || CheckDiagonal(piece))
-            {
-                return;
-            }
-
-            result = "Move accepted, here's the current board: \n";
-        }
-
-        public bool CheckRow(char piece)
-        {
-            for (int i = 0; i < boardSpaces.Length; i++)
-            {
-                if (boardSpaces[i][0] == piece && boardSpaces[i][1] == piece && boardSpaces[i][2] == piece)
-                { 
-                    isGameEnded = true;
-                    result = "Move accepted, well done you've won the game! \n";
+                if (dimensions[i][0] == piece && dimensions[i][1] == piece && dimensions[i][2] == piece)
+                {
+                    print.GetWinner(piece);
                     return true;
                 }
             }
             return false;
         }
 
-        public bool CheckColumn(char piece)
+        private bool CheckColumn(char piece)
         {
-            for (int i = 0; i < boardSpaces.Length; i++)
+            for (int i = 0; i < dimensions.Length; i++)
             {
-                if (boardSpaces[0][i] == piece && boardSpaces[1][i] == piece && boardSpaces[2][i] == piece)
-                { 
-                    isGameEnded = true;
-                    result = "Move accepted, well done you've won the game! \n";
+                if (dimensions[0][i] == piece && dimensions[1][i] == piece && dimensions[2][i] == piece)
+                {
+                    print.GetWinner(piece);
                     return true;
                 }
             }
             return false;
         }
 
-        public bool CheckDiagonal(char piece)
+        private bool CheckDiagonal(char piece)
         {
-            if ((boardSpaces[0][0] == piece && boardSpaces[1][1] == piece && boardSpaces[2][2] == piece) || (boardSpaces[0][2] == piece && boardSpaces[1][1] == piece && boardSpaces[2][0] == piece && boardSpaces[1][1] == piece))
+            if ((dimensions[0][0] == piece && dimensions[1][1] == piece && dimensions[2][2] == piece) || (dimensions[0][2] == piece && dimensions[1][1] == piece && dimensions[2][0] == piece))
             {
-                isGameEnded = true;
-                result = "Move accepted, well done you've won the game! \n";
+                print.GetWinner(piece);
                 return true;
             }
 
             return false;
         }
+
     }
 }
