@@ -17,7 +17,7 @@ namespace TicTacToe
             print = new Print();
         }
 
-        public void PlaceAPiece(int x, int y, Player playerOne, Player playerTwo)
+        public bool PlaceAPiece(int x, int y, Player playerOne)
         {
             if (CheckSpaceEmpty(x, y))
             {
@@ -31,29 +31,19 @@ namespace TicTacToe
                 }
                 print.MoveAccepted();
                 counter++;
+                return true;
             }
             else
             {
                 print.PieceIsBlocked();
+                print.PrintBoard(dimensions);
+                return false;
             }
-        }
-
-        public void PrintBoard()
-        {
-            for (int i = 0; i < dimensions.Length; i++)
-            {
-                for (int j = 0; j < dimensions[i].Length; j++)
-                {
-                    Console.Write(dimensions[i][j] + " ");
-                }
-                Console.WriteLine();
-            }
-            Console.WriteLine();
         }
 
         public bool CheckBoardStatus(char piece)
         {
-            PrintBoard();
+            print.PrintBoard(dimensions);
             if (counter == 9)
             {
                 print.GameIsDrawn();
