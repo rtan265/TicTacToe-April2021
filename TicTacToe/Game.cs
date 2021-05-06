@@ -58,8 +58,8 @@ namespace TicTacToe
                     string[] coordinates = UserInput.Split(',');
                     x = Int32.Parse(coordinates[0]) - 1;
                     y = Int32.Parse(coordinates[1]) - 1;
-                    
-                    Console.WriteLine();
+
+                    print.PrintLine();
                     if (board.PlaceAPiece(x, y, playerOne))
                     {
 
