@@ -13,6 +13,11 @@ namespace TicTacToe
             toBePrinted = "";
         }
 
+        public void PrintLine()
+        {
+            Console.WriteLine();
+        }
+
         public void WelcomeToTicTacToe()
         {
             toBePrinted = "Welcome to Tic Tac Toe! \nHere's the current board: \n";
