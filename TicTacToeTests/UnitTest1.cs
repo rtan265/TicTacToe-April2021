@@ -21,7 +21,7 @@ namespace TicTacToeTests
         }
 
         [Fact]
-        public void GivenANewPiece_WhereSpaceIsTaken_ReturnsFalse()
+        public void GivenANewPieceToPlace_WhereSpaceIsTaken_ReturnsFalse()
         {
             // Arrange
             Board board = new TicTacToe.Board(new char[][]
@@ -38,5 +38,61 @@ namespace TicTacToeTests
             // Assert
             Assert.False(result);
         }
+
+        [Fact]
+        public void GivenANewPieceToPlace_WhereSpaceIsEmpty_ReturnsTrue()
+        {
+            // Arrange
+            Board board = new TicTacToe.Board(new char[][]
+            {
+               new char[] { 'X', '.', 'O' },
+               new char[] { 'X', 'O', '.' },
+               new char[] { '.', '.', '.' }
+            });
+            Player playerOne = new TicTacToe.Player('X');
+
+            // Act
+            var result = board.PlaceAPiece(2, 0, playerOne);
+
+            // Assert
+            Assert.True(result);
+        }
+
+        [Fact]
+        public void GivenExistingBoard_WhereGameIsStillGoing_ReturnsFalse()
+        {
+            // Arrange
+            Board board = new TicTacToe.Board(new char[][]
+            {
+               new char[] { 'X', '.', 'O' },
+               new char[] { 'X', 'O', '.' },
+               new char[] { '.', '.', 'X' }
+            });
+
+            // Act
+            var result = board.CheckBoardStatus('X');
+
+            // Assert
+            Assert.False(result);
+        }
+
+        [Fact]
+        public void GivenExistingBoard_WhereGameIsWon_ReturnsTrue()
+        {
+            // Arrange
+            Board board = new TicTacToe.Board(new char[][]
+            {
+               new char[] { 'X', '.', 'O' },
+               new char[] { 'X', 'O', '.' },
+               new char[] { 'X', '.', '.' }
+            });
+
+            // Act
+            var result = board.CheckBoardStatus('X');
+
+            // Assert
+            Assert.True(result);
+        }
+
     }
 }
