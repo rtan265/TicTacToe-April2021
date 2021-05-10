@@ -7,13 +7,30 @@ namespace TicTacToe
     class Board
     {
         public char[][] dimensions { get; set; }
-        private int counter { get; set; }
+        public int counter { get; set; }
         private Print print { get; set; }
 
         public Board()
         { 
             dimensions = new char[][] { new char[] { '.', '.', '.'}, new char[] { '.', '.', '.'}, new char[] { '.', '.', '.'} };
             counter = 0;
+            print = new Print();
+        }
+
+        public Board(char[][] givenDimension)
+        {
+            dimensions = givenDimension;
+            counter = 0;
+            for (int i = 0; i < givenDimension.Length; i++)
+            {
+                for (int j = 0; j < givenDimension[i].Length; j++)
+                {
+                    if (givenDimension[i][j] != '.')
+                    {
+                        counter++;
+                    }
+                }
+            }
             print = new Print();
         }
 
