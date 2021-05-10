@@ -20,6 +20,7 @@ namespace TicTacToeTests
             Assert.Equal(5, board.counter);
         }
 
+        [Fact]
         public void GivenANewPiece_WhereSpaceIsTaken_ReturnsFalse()
         {
             // Arrange
@@ -35,7 +36,7 @@ namespace TicTacToeTests
             var result = board.PlaceAPiece(1, 1, playerOne);
 
             // Assert
-            Assert.True(result);
+            Assert.False(result);
         }
     }
 }
