@@ -6,18 +6,19 @@ namespace TicTacToe
 {
     class Game
     {
+        public PrintService _printService;
         public Board board { get; set; }
         public Player playerOne { get; set; }
         public Player playerTwo { get; set; }
         public bool isGameEnded { get; set; }
-        public Print print { get; set; }
+
 
         public Game()
         {
             playerOne = new Player('X');
             playerTwo = new Player('O');
             board = new Board();
-            print = new Print();
+            _printService = new PrintService();
 
             isGameEnded = false;
         }
@@ -25,18 +26,18 @@ namespace TicTacToe
         public void StartGame()
         {
             int x, y;
-            print.WelcomeToTicTacToe();
-            print.PrintBoard(board);
+            _printService.WelcomeToTicTacToe();
+            _printService.PrintBoard(board.dimensions);
 
             do
             {
                 if (playerOne.isTurn)
                 {
-                    print.PlayerOneTurn(); ;
+                    _printService.PrintPlayerTurn(playerOne.Name);
                 } 
                 else
                 {
-                    print.PlayerTwoTurn();
+                    _printService.PrintPlayerTurn(playerTwo.Name);
                 }
 
                 string UserInput = Console.ReadLine();
@@ -44,11 +45,11 @@ namespace TicTacToe
                 {
                     if (playerOne.isTurn)
                     {
-                        print.PlayerTwoWon();
+                        _printService.PlayerTwoWon();
                     }
                     else
                     {
-                        print.PlayerOneWon();
+                        _printService.PlayerOneWon();
                     }
                     break;
                 }
@@ -59,7 +60,7 @@ namespace TicTacToe
                     x = Int32.Parse(coordinates[0]) - 1;
                     y = Int32.Parse(coordinates[1]) - 1;
 
-                    print.PrintLine();
+                    _printService.PrintLine();
                     if (board.PlaceAPiece(x, y, playerOne))
                     {
 
@@ -70,8 +71,8 @@ namespace TicTacToe
                 }
                 catch
                 {
-                    print.InputError();
-                    print.PrintBoard(board);
+                    _printService.InputError();
+                    _printService.PrintBoard(board.dimensions);
                 }
             } while (!isGameEnded);
         }

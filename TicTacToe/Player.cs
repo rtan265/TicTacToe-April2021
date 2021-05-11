@@ -8,6 +8,7 @@ namespace TicTacToe
     {
         public char Piece { get; set; }
         public bool isTurn { get; set; }
+        public string Name { get; set; }
 
         public Player(char piece)
         {

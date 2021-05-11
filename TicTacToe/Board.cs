@@ -8,13 +8,13 @@ namespace TicTacToe
     {
         public char[][] dimensions { get; set; }
         public int counter { get; set; }
-        private Print print { get; set; }
+        private PrintService print { get; set; }
 
         public Board()
         { 
             dimensions = new char[][] { new char[] { '.', '.', '.'}, new char[] { '.', '.', '.'}, new char[] { '.', '.', '.'} };
             counter = 0;
-            print = new Print();
+            print = new PrintService();
         }
 
         public Board(char[][] givenDimension)
@@ -31,7 +31,7 @@ namespace TicTacToe
                     }
                 }
             }
-            print = new Print();
+            print = new PrintService();
         }
 
         public bool PlaceAPiece(int x, int y, Player playerOne)
