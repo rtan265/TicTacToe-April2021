@@ -8,13 +8,13 @@ namespace TicTacToe
     {
         public char[][] dimensions { get; set; }
         public int counter { get; set; }
-        private PrintService print { get; set; }
+        private PrintService _printService { get; set; }
 
         public Board()
         { 
             dimensions = new char[][] { new char[] { '.', '.', '.'}, new char[] { '.', '.', '.'}, new char[] { '.', '.', '.'} };
             counter = 0;
-            print = new PrintService();
+            _printService = new PrintService();
         }
 
         public Board(char[][] givenDimension)
@@ -31,7 +31,7 @@ namespace TicTacToe
                     }
                 }
             }
-            print = new PrintService();
+            _printService = new PrintService();
         }
 
         public bool PlaceAPiece(int x, int y, Player playerOne)
@@ -46,28 +46,28 @@ namespace TicTacToe
                 {
                     dimensions[x][y] = 'O';
                 }
-                print.MoveAccepted();
+                _printService.MoveAccepted();
                 counter++;
                 return true;
             }
             else
             {
-                print.PieceIsBlocked();
-                print.PrintBoard(dimensions);
+                _printService.PieceIsBlocked();
+                _printService.PrintBoard(dimensions);
                 return false;
             }
         }
 
-        public bool CheckBoardStatus(char piece)
+        public bool CheckBoardStatus(Player player)
         {
-            print.PrintBoard(dimensions);
+            _printService.PrintBoard(dimensions);
             if (counter == 9)
             {
-                print.GameIsDrawn();
+                _printService.GameIsDrawn();
                 return true;
             }
 
-            if (CheckRow(piece) || CheckColumn(piece) || CheckDiagonal(piece))
+            if (CheckRow(player) || CheckColumn(player) || CheckDiagonal(player))
             {
                 return true;
             }
@@ -83,37 +83,37 @@ namespace TicTacToe
             return true;
         }
 
-        private bool CheckRow(char piece)
+        private bool CheckRow(Player player)
         {
             for (int i = 0; i < dimensions.Length; i++)
             {
-                if (dimensions[i][0] == piece && dimensions[i][1] == piece && dimensions[i][2] == piece)
+                if (dimensions[i][0] == player.Piece && dimensions[i][1] == player.Piece && dimensions[i][2] == player.Piece)
                 {
-                    print.GetWinner(piece);
+                    _printService.PlayerWon(player.Name);
                     return true;
                 }
             }
             return false;
         }
 
-        private bool CheckColumn(char piece)
+        private bool CheckColumn(Player player)
         {
             for (int i = 0; i < dimensions.Length; i++)
             {
-                if (dimensions[0][i] == piece && dimensions[1][i] == piece && dimensions[2][i] == piece)
+                if (dimensions[0][i] == player.Piece && dimensions[1][i] == player.Piece && dimensions[2][i] == player.Piece)
                 {
-                    print.GetWinner(piece);
+                    _printService.PlayerWon(player.Name);
                     return true;
                 }
             }
             return false;
         }
 
-        private bool CheckDiagonal(char piece)
+        private bool CheckDiagonal(Player player)
         {
-            if ((dimensions[0][0] == piece && dimensions[1][1] == piece && dimensions[2][2] == piece) || (dimensions[0][2] == piece && dimensions[1][1] == piece && dimensions[2][0] == piece))
+            if ((dimensions[0][0] == player.Piece && dimensions[1][1] == player.Piece && dimensions[2][2] == player.Piece || (dimensions[0][2] == player.Piece && dimensions[1][1] == player.Piece && dimensions[2][0] == player.Piece))
             {
-                print.GetWinner(piece);
+                _printService.PlayerWon(player.Name);
                 return true;
             }
 

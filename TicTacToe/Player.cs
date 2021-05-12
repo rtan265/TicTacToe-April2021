@@ -17,10 +17,12 @@ namespace TicTacToe
             if (piece == 'X')
             {
                 isTurn = true;
+                Name = "1";
             }
             else
             {
                 isTurn = false;
+                Name = "2";
             }
         }
     }

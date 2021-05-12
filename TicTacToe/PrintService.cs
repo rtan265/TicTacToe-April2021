@@ -17,15 +17,10 @@ namespace TicTacToe
             Console.Write($"Player {playerName} enter a coord x, y to place your X or enter 'q' to give up: ");
         }
 
-        //Refactor playerWon
-        public void PlayerOneWon()
-        {
-            Console.WriteLine("Player 1 has won the game!");
-        }
 
-        public void PlayerTwoWon()
+        public void PlayerWon(string playerName)
         {
-            Console.WriteLine("Player 2 has won the game!");
+            Console.WriteLine($"Player {playerName} has won the game!");
         }
 
         public void InputError()
@@ -41,18 +36,6 @@ namespace TicTacToe
         public void GameIsDrawn()
         {
             Console.WriteLine("Game is a draw. \n");
-        }
-
-        public void GetWinner(char piece)
-        {
-            if (piece == 'X')
-            {
-                PlayerOneWon();
-            }
-            else
-            {
-                PlayerTwoWon();
-            }
         }
 
         public void MoveAccepted()

@@ -45,11 +45,11 @@ namespace TicTacToe
                 {
                     if (playerOne.isTurn)
                     {
-                        _printService.PlayerTwoWon();
+                        _printService.PlayerWon(playerTwo.Name);
                     }
                     else
                     {
-                        _printService.PlayerOneWon();
+                        _printService.PlayerWon(playerOne.Name);
                     }
                     break;
                 }
@@ -60,11 +60,11 @@ namespace TicTacToe
                     x = Int32.Parse(coordinates[0]) - 1;
                     y = Int32.Parse(coordinates[1]) - 1;
 
-                    _printService.PrintLine();
+                    // _printService.PrintLine();
                     if (board.PlaceAPiece(x, y, playerOne))
                     {
 
-                        isGameEnded = board.CheckBoardStatus(playerOne.isTurn ? 'X' : 'O');
+                        isGameEnded = board.CheckBoardStatus(playerOne.isTurn ? playerOne : playerTwo);
                         FlipPlayerTurn(playerOne);
 
                     }
